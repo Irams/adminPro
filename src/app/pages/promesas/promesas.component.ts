@@ -13,7 +13,12 @@ export class PromesasComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getUsuarios();
+    this.getUsuarios().then( usuarios => {
+      console.log(usuarios);
+      
+    });
+
+    // this.getUsuarios();
 
   //   const promesa = new Promise( (resolve, reject) =>{
   //     if(false){
@@ -35,9 +40,12 @@ export class PromesasComponent implements OnInit {
 
   getUsuarios(){
 
-    fetch('https://reqres.in/api/users?page=2')
-        .then(resp => resp.json() )
-        .then(body => console.log(body.data));
+    return new Promise( resolve =>{
+      fetch('https://reqres.in/api/users?page=2')
+          .then(resp => resp.json() )
+          .then(body => console.log(body.data));
+    });
+
   }
 
 }
