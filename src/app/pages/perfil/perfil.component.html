@@ -1,0 +1,119 @@
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Mi perfil de usuario</h4>
+                <h6 class="card-subtitle">Ajustes</h6>
+                <form class="form p-t-20"
+                      [formGroup]="perfilForm"
+                      (submit)="actualizarPerfil()">
+
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre del usuario</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="ti-user"></i>
+                            </div>
+
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="exampleInputuname" 
+                                   placeholder="Nombre usuario"
+                                   formControlName="nombre">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="ti-email"></i>
+                            </div>
+                            <input type="email" 
+                                   class="form-control" 
+                                   id="exampleInputEmail1" 
+                                   placeholder="Email"
+                                   formControlName="email"
+                                   [readOnly]="usuario.google">
+                        </div>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="pwd1">
+                            Password
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="ti-lock">                                    
+                                </i>
+                            </div>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="pwd1" 
+                                   placeholder="password anterior"
+                                   formControlName="oldPassword">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd2">
+                            Confirmar Password
+                        </label>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="ti-lock">                                   
+                                </i>
+                            </div>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="pwd2" 
+                                   placeholder="Nuevo password"
+                                   formControlName="newPassword">
+                        </div>
+                    </div> -->
+                    <button type="submit" 
+                            class="btn btn-success waves-effect waves-light m-r-10"
+                            [disabled]="perfilForm.invalid">
+                        <i class="mdi mdi-content-save"></i>
+                        Guardar
+                    </button>
+                    <button type="button" class="btn btn-inverse waves-effect waves-light" routerLink="/dashboard">
+                        <i class="mdi mdi-delete-empty"></i>
+                        Cancelar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Imagen</h4>
+                <h6 class="card-subtitle">Imagen del usuario</h6>
+
+                <div class="text-center">
+                    <img *ngIf="!imgTemp" [src]="usuario.imagenUrl" 
+                         alt="imagen del usuario"
+                         class="img-avatar">
+                    <img *ngIf="imgTemp" [src]="imgTemp" 
+                         alt="imagen del usuario"
+                         class="img-avatar">
+                </div>
+                <input type="file"
+                       (change)="cambiarImagen($any($event.target).files[0])">
+                <br>
+                <br>
+
+                <button type="button" 
+                        class="btn btn-block btn-success waves-effect waves-light m-r-10"
+                        [disabled]="!imagenASubir"
+                        (click)="subirImagen()">
+                    <i class="mdi mdi-content-save"></i>
+                    Cambiar imagen
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
