@@ -15,7 +15,7 @@ import { PerfilForm } from '../interfaces/perfil-form.interface';
 
 declare const google: any;
 
-const baseUrl= environment.base_url;
+const baseUrl= environment.base_url; 
 
 @Injectable({
   providedIn: 'root'
@@ -126,7 +126,8 @@ export class UsuarioService {
             // delay(1000),
             map(resp =>{
               // console.log(resp);
-              const usuarios = resp.usuarios.map( user => new Usuario(
+              const usuarios = resp.usuarios.map( 
+                user => new Usuario(
                 user.nombre,
                 user.email,
                 '',

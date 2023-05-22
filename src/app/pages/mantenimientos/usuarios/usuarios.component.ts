@@ -29,7 +29,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
                private modalImagenService: ModalImagenService ) { }
 
   ngOnDestroy(): void {
-    this.imgSubs,unsubscribe();
+    this.imgSubs.unsubscribe();
   }
   
   ngOnInit(): void {
@@ -50,10 +50,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
           this.usuariosTemp = usuarios;
           this.cargando = false;
         }
-        // this.totalUsuarios = total;
-        // this.usuarios = usuarios;
-        // this.usuariosTemp = usuarios;
-        // this.cargando = false;
         
       })
   }
@@ -75,7 +71,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       return this.usuarios = this.usuariosTemp;
     }
     this.buscarServ.buscar('usuarios', termino)
-            .subscribe(resp => {
+            .subscribe( (resp: Usuario[]) => {
               this.usuarios = resp;
             });
     return[];
@@ -114,7 +110,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     // console.log(usuario);
     this.usuarioService.guardarUsuario(usuario)
           .subscribe(resp => {
-            console.log(resp);
+            // console.log(resp);
+            Swal.fire('Rol cambiado', 'success')
             
           })    
   }
@@ -125,8 +122,5 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this.modalImagenService.abrirModal('usuarios', usuario.uid, usuario.img);
   }
 
-}
-function unsubscribe() {
-  throw new Error('Function not implemented.');
 }
 

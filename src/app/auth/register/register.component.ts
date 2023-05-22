@@ -15,8 +15,8 @@ export class RegisterComponent {
   public formSumitted = false;
 
   public registerForm = this.fb.group({
-    nombre: ['Herberth', Validators.required ],
-    email: ['herber.medina@gmail.com', [Validators.required, Validators.email]],
+    nombre: ['', Validators.required ],
+    email: ['', [Validators.required, Validators.email]],
     password: ['123456', [Validators.required, Validators.minLength(6)]],
     password2: ['123456', [Validators.required, Validators.minLength(6)]],
     terminos: [false, Validators.required],
@@ -31,16 +31,16 @@ export class RegisterComponent {
 
   crearUsuario(){
     this.formSumitted = true;
-    // console.log(this.registerForm.value);
+    console.log(this.registerForm.value);
     // console.log(this.registerForm);
     
     if(this.registerForm.valid && !this.aceptaTerminos()){
       this.usuarioService.crearUsuario( this.registerForm.value)
-              .subscribe(resp=>{
+              .subscribe( resp=>{
                 // console.log('Usuario creado!');
                 
                 //Navegar al dashboard
-                this.router.navigateByUrl('/');
+                next: this.router.navigateByUrl('/');
                 
                 // console.log(resp);
               }, (err)=> {

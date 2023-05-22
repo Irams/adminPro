@@ -2,7 +2,6 @@ import { environment } from "src/environments/environment";
 
 const baseUrl=environment.base_url;
 
-environment
 
 export class Usuario {
     constructor(
