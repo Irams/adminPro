@@ -32,7 +32,7 @@ export class UsuarioService {
     return localStorage.getItem('token') || '';
   }
 
-  get rol(): 'ADMIN_ROLE' | 'USER_ROLE'{
+  get rol(): 'ADMIN_ROL' | 'USER_ROLE'{
     return this.usuario.rol;
   }
 
