@@ -12,50 +12,48 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class RegisterComponent {
 
-  public formSumitted = false;
-
+  
   public registerForm = this.fb.group({
     nombre: ['', Validators.required ],
-    email: ['', [Validators.required, Validators.email]],
-    password: ['123456', [Validators.required, Validators.minLength(6)]],
-    password2: ['123456', [Validators.required, Validators.minLength(6)]],
-    terminos: [false, Validators.required],
-
+    email: ['',  [ Validators.required, Validators.email ] ],
+    password: ['', [Validators.required, Validators.minLength(6)] ],
+    password2: ['', [Validators.required, Validators.minLength(6)] ],
+    terminos: [null,  Validators.required ],
   }, {
-    validators: this.passwordsIguales('password', 'password2')
+    Validators: this.passwordsIguales('password', 'password2') //Validators debe ir en mayúscula!!!
   });
-
+  public formSubmitted = false;
+  
   constructor( private fb: FormBuilder,
-               private usuarioService: UsuarioService,
-               private router: Router) { }
-
-  crearUsuario(){
-    this.formSumitted = true;
-    console.log(this.registerForm.value);
-    // console.log(this.registerForm);
+    private usuarioService: UsuarioService,
+    private router: Router) { }
     
-    if(this.registerForm.valid && !this.aceptaTerminos()){
-      this.usuarioService.crearUsuario( this.registerForm.value)
-              .subscribe( resp=>{
-                // console.log('Usuario creado!');
-                
-                //Navegar al dashboard
-                next: this.router.navigateByUrl('/');
-                
-                // console.log(resp);
-              }, (err)=> {
-                //Sucede un error
-                Swal.fire('Error', err.error.msg, 'error');
-              });
-            }else{
-              return;
-            }
-
-    //Realizar el posteo
-  }
+    crearUsuario() {
+      this.formSubmitted = true;
+      // console.log( this.registerForm.valid );
+      // console.log( this.registerForm.value );
+  
+      if ( this.registerForm.invalid ) {
+        return;
+      }
+  
+      // Realizar el posteo
+      this.usuarioService.crearUsuario( this.registerForm.value )
+          .subscribe( resp => {
+            console.log(resp);
+            // Navegar al Dashboard
+            this.router.navigateByUrl('/');
+  
+          }, (err) => {
+            // Si sucede un error
+            Swal.fire('Error', err.error.msg, 'error' );
+          });
+  
+  
+    }
 
   campoNoValido( campo: string ):boolean{
-    if(this.registerForm.get(campo)?.invalid && this.formSumitted ){
+    if(this.registerForm.get(campo)?.invalid && this.formSubmitted ){
       return true;
     }else{
       return false;
@@ -66,15 +64,15 @@ export class RegisterComponent {
     const pass1 = this.registerForm.get('password')?.value;
     const pass2 = this.registerForm.get('password2')?.value;
 
-    if( (pass1 !== pass2) && this.formSumitted ){
+    if( (pass1 !== pass2) && this.formSubmitted ){
       return true;
     }else{
       return false;
     }
   }
 
-  aceptaTerminos(){
-    return !this.registerForm.get('terminos')?.value && this.formSumitted;
+  aceptaTerminos() {
+    return !this.registerForm.get('terminos').value && this.formSubmitted;
   }
 
   passwordsIguales(pass1Name: string, pass2Name: string){
